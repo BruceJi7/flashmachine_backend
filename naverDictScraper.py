@@ -252,10 +252,10 @@ def load_words_from_file():
 # word_results = getDefinition('화제')
 # word_results = getDefinition('friend')
 
-loaded_words = load_words_from_file()
+# loaded_words = load_words_from_file()
 
-word_results = [getDefinition(w) for w in loaded_words]
-pprint(word_results)
+# word_results = [getDefinition(w) for w in loaded_words]
+# pprint(word_results)
 # word_results = addJSONID(word_results)
 # print(word_results)
 # for n in word_results:
