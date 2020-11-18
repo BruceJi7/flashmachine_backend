@@ -134,9 +134,9 @@ class MeaningsWord():
         meaning_span = self.definitions_cell.find('span', class_="fnt_e07 _ttsText")
         if meaning_span:
             if self.language == 'Korean':
-                return f'"{meaning_span.text}" 에서와 같이 {main_word}'
-            else:
                 return f'{main_word.capitalize()}, as in {meaning_span.text}'
+            else:
+                return f'"{meaning_span.text}" 에서와 같이 {main_word}'
 
 
         else:
@@ -218,7 +218,11 @@ def getDefinition(word):
 
         combined_word_objects_with_id.append(updated_dict) 
 
-    return { word: combined_word_objects_with_id }
+    return { 
+            'queryWord': word,
+            'results' :combined_word_objects_with_id 
+            }
+
 
 
 def addJSONID(listOfDicts):
