@@ -5,15 +5,16 @@ Flashmachine is a project that turns a list of words into definitions that you c
 
 ### To use flashmachine:
 1. Download or clone the repository
-2. Install the python requirements:
+2. Open a command prompt windown in the folder the repository is located in, or navigate there.
+3. Install the python requirements:
 ```
 pip install -r requirements.txt
 ```
-3. Activate the environment:
+4. Activate the environment:
 ```
 .\flashmachine_env\scripts\activate.bat
 ```
-4. Initialise the FastAPI server:
+5. Initialise the FastAPI server:
 ```
 uvicorn flashmachine_API:app --reload
 ```
