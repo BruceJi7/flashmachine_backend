@@ -10,6 +10,7 @@ headers = {'User-Agent' : 'Chrome/85.0.4183.12'}
 korDictURL = r'https://endic.naver.com/search.nhn?sLn=en&searchOption=all&query='
 
 SPACE_RX = re.compile(r'\s+')
+EMPTY_BRACKETS_RX = re.compile(r'[\(\[]\W*[\)\]]\s?')
 
 DE_KOREAN_RX = re.compile(r'\([^A-Za-z]+\)')
 DE_ENGLISH_RX = re.compile(r'[A-Za-z]+')
@@ -87,8 +88,18 @@ class WordIdiomWord():
             meaning_span = ADVERB_RX.sub('Adv:', meaning_span)
 
         meaning_span = SPACE_RX.sub(' ', meaning_span)
+        meaning_span = EMPTY_BRACKETS_RX.sub('', meaning_span)
+        meaning_span = meaning_span.replace(';', ',')
 
-        return meaning_span
+
+
+        #At this point, some meaning_spans may be blank. Discard if so
+        has_word = re.compile(r'\w').search(meaning_span)
+
+        if has_word:
+            return meaning_span
+        else:
+            return None
 
     @property
     def dictify(self):
@@ -234,6 +245,10 @@ def getDefinition(word):
         meanings_section_word_objects =  meanings_to_objects(sections[1], word_language)
 
     combined_word_objects = word_idiom_section_word_objects + meanings_section_word_objects
+
+    # Remove blank line entries:
+    combined_word_objects = [i for i in combined_word_objects if i['definition']]
+
     combined_word_objects_with_id = []
     for id_number, i in enumerate(combined_word_objects):
 
@@ -278,7 +293,7 @@ def load_words_from_file():
     print(words)
     return words
 
-word_results = getDefinition('화제')
+
 # word_results = getDefinition('friend')
 
 # loaded_words = load_words_from_file()
