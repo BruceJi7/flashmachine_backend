@@ -1,8 +1,16 @@
-from typing import Optional
+from typing import Optional, List
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from pydantic import BaseModel
+
 from naverDictScraper import getDefinition
+
+
+class Word_Request(BaseModel):
+    word_array: List[str]
+
+
 
 app = FastAPI()
 
@@ -42,3 +50,15 @@ def get_multiple_words(joined_word:str):
         result.append(getDefinition(w))
 
     return(result)
+
+@app.post('/request_words/')
+async def get_words_with_JSON(word_request: Word_Request):
+    print('Confirm receipt of word request:')
+    print(word_request)
+    
+    result = []
+    for w in word_request.word_array:
+        result.append(getDefinition(w))
+    
+    return result
+
