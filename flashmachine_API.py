@@ -11,12 +11,10 @@ class Word_Request(BaseModel):
     word_array: List[str]
 
 
-
 app = FastAPI()
 
 origins = [
-    "http://localhost",
-    "http://localhost:3000",
+    "https://flashmachine.herokuapp.com"
 ]
 
 app.add_middleware(
@@ -28,12 +26,10 @@ app.add_middleware(
 )
 
 
-
-
 @app.get('/')
 def read_root():
-    print('You can do extra shit here, look')
-    return {"hello": "world"}
+    return {"Flashmachine API status:": "Operational"}
+
 
 @app.get('/single_word/{word}')
 def get_single_word(word: str):
@@ -42,7 +38,7 @@ def get_single_word(word: str):
 
 
 @app.get('/words/{joined_word}')
-def get_multiple_words(joined_word:str):
+def get_multiple_words(joined_word: str):
     word_list = joined_word.split('_')
     result = []
 
@@ -51,14 +47,14 @@ def get_multiple_words(joined_word:str):
 
     return(result)
 
+
 @app.post('/request_words/')
 async def get_words_with_JSON(word_request: Word_Request):
     print('Confirm receipt of word request:')
     print(word_request)
-    
+
     result = []
     for w in word_request.word_array:
         result.append(getDefinition(w))
-    
-    return result
 
+    return result
