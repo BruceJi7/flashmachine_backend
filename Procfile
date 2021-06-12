@@ -1,0 +1,1 @@
+web: uvicorn flashmachine_API:app
