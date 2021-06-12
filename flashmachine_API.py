@@ -14,7 +14,8 @@ class Word_Request(BaseModel):
 app = FastAPI()
 
 origins = [
-    "https://flashmachine.herokuapp.com"
+    "https://flashmachine.herokuapp.com",
+    "http://localhost:3000"
 ]
 
 app.add_middleware(
